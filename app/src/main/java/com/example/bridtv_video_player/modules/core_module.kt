@@ -26,9 +26,10 @@ val core_module = module {
     single { createMoshi() }
 
     single { createOkHttpClient() }
-
 }
 
+const val token = "ba99d5592ac96b3493c4cd6fa145a8e6"
+const val baseUrl = "https://api.vimeo.com/"
 
 fun createMoshi(): Moshi {
     return Moshi.Builder()
@@ -38,18 +39,27 @@ fun createMoshi(): Moshi {
 
 fun createRetrofit(moshi: Moshi, httpClient: OkHttpClient): Retrofit {
     return Retrofit.Builder()
-        .baseUrl("https://myfakeapi.com/")
+        .baseUrl(baseUrl)
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .addConverterFactory(MoshiConverterFactory.create(moshi).asLenient())
         .client(httpClient)
         .build()
 }
 
+
 fun createOkHttpClient(): OkHttpClient {
     val httpClient = OkHttpClient.Builder()
     httpClient.readTimeout(60, TimeUnit.SECONDS)
     httpClient.connectTimeout(60, TimeUnit.SECONDS)
     httpClient.writeTimeout(60, TimeUnit.SECONDS)
+
+    httpClient.addInterceptor { chain ->
+        val original = chain.request()
+        val requestBuilder = original.newBuilder()
+            .header("Authorization", "Bearer $token")
+        val request = requestBuilder.build()
+        chain.proceed(request)
+    }
 
 //    if (BuildConfig.DEBUG) { //todo look into this
 //        val logging = HttpLoggingInterceptor()

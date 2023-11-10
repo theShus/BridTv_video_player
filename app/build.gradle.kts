@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.example.bridtv_video_player"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.bridtv_video_player"
@@ -38,6 +38,7 @@ android {
     }
     buildFeatures {
         compose = true
+        viewBinding = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.3"
@@ -59,6 +60,8 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
+    implementation ("androidx.emoji2:emoji2-views-helper:1.3.0")
+    implementation("com.google.android.material:material:1.10.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -67,7 +70,8 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
-    implementation ("androidx.emoji2:emoji2-views-helper:1.3.0")
+    implementation("androidx.coordinatorlayout:coordinatorlayout:1.2.0")
+    implementation ("androidx.constraintlayout:constraintlayout:2.1.3")
 
 
     // Splash
@@ -104,5 +108,10 @@ dependencies {
     //Moshi
     implementation ("com.squareup.moshi:moshi-adapters:1.14.0")
     implementation ("com.squareup.retrofit2:converter-moshi:2.9.0")
+
+    //Exo player
+    implementation ("com.google.android.exoplayer:exoplayer-core:2.16.0")
+    implementation ("com.google.android.exoplayer:exoplayer-ui:2.16.0")
+
 
 }
