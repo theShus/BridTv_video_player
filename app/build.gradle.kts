@@ -102,6 +102,7 @@ dependencies {
     implementation ("com.squareup.okhttp3:okhttp-urlconnection:$okHttpVersion")
 
     //Moshi
+    implementation ("com.squareup.moshi:moshi-adapters:1.14.0")
     implementation ("com.squareup.retrofit2:converter-moshi:2.9.0")
 
 }

@@ -1,4 +1,4 @@
-package com.example.bridtv_video_player
+package com.example.bridtv_video_player.view.activities
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
