@@ -11,7 +11,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/movieRV"
         android:layout_width="409dp"
-        android:layout_height="640dp"
+        android:layout_height="match_parent"
         android:scrollbarSize="30dp"
         android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
