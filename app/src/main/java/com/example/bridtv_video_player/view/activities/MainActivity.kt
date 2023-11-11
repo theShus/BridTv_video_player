@@ -1,10 +1,14 @@
 package com.example.bridtv_video_player.view.activities
 
+import android.graphics.Rect
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.bridtv_video_player.data.models.Movie
 import com.example.bridtv_video_player.databinding.ActivityMainBinding
 import com.example.bridtv_video_player.states.NetworkState
@@ -30,18 +34,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun init() {
-        initView()
+        initRecycler()
         initObservers()
     }
 
-    private fun initView() {
-        binding.movieRV.layoutManager = LinearLayoutManager(this)
+    private fun initRecycler() {
+        binding.movieRV.layoutManager = GridLayoutManager(this, 2)
         adapter = MovieAdapter(::onItemClick)//callback za on click
-        binding.movieRV.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+//        binding.movieRV.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+        binding.movieRV.addItemDecoration(GridItemDecoration(20)) // Adjust the spacing as needed
+
         binding.movieRV.adapter = adapter
 
         //todo scroll thingy 68
-
     }
 
     private fun onItemClick(movie: Movie){
@@ -51,11 +56,6 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun initObservers() {
-//        binding.button.setOnClickListener {
-//            println("XXX KLIKNUTO DUGME")
-//            movieViewModel.getPopularMovies()
-//        }
-
         movieViewModel.networkState.observe(this) { networkState ->
             Timber.e(networkState.toString())
             renderState(networkState)
@@ -81,8 +81,21 @@ class MainActivity : AppCompatActivity() {
             is NetworkState.Error -> {
                 Toast.makeText(this, state.message, Toast.LENGTH_SHORT).show()
             }
-            else -> Timber.e("Error")
         }
     }
+}
 
+class GridItemDecoration(private val spacing: Int) : RecyclerView.ItemDecoration() {
+
+    override fun getItemOffsets(
+        outRect: Rect,
+        view: View,
+        parent: RecyclerView,
+        state: RecyclerView.State
+    ) {
+        outRect.left = spacing
+        outRect.right = spacing
+        outRect.top = spacing
+        outRect.bottom = spacing
+    }
 }

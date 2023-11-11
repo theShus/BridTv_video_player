@@ -121,4 +121,8 @@ dependencies {
     //Vimeo Network
     implementation ("com.github.vimeo.vimeo-networking-java:vimeo-networking:3.12.0")
     implementation ("com.github.vimeo.vimeo-networking-java:models:3.12.0")
+
+    //Picaso - image setting
+    implementation ("com.squareup.picasso:picasso:2.71828")
+
 }
