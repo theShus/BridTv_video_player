@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
         initObservers()
     }
 
+
     private fun initRecycler() {
         binding.movieRV.layoutManager = GridLayoutManager(this, 2)
         adapter = MovieAdapter(::onItemClick)//callback za on click

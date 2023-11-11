@@ -2,12 +2,16 @@ package com.example.bridtv_video_player.view.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
 import com.example.bridtv_video_player.R
 import com.example.bridtv_video_player.databinding.ActivityPlayerBinding
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.source.dash.DashMediaSource
+import com.google.android.exoplayer2.ui.PlayerView
+import com.google.android.exoplayer2.ui.StyledPlayerView
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
 
 class PlayerActivity : AppCompatActivity() {
@@ -22,13 +26,10 @@ class PlayerActivity : AppCompatActivity() {
     private var playbackPosition = 0L
     private var playWhenReady = true
 
-    private lateinit var movieNameTv: TextView
-    private lateinit var movieDescriptionTv: TextView
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPlayerBinding.inflate(layoutInflater)
-        setContentView(R.layout.activity_player)
+        setContentView(binding.root)
         init()
     }
 
@@ -45,10 +46,8 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     private fun initView(){
-        movieNameTv = findViewById(R.id.movieNameTv)//todo ne radi binding, fix it
-        movieDescriptionTv = findViewById(R.id.movieDescriptionTv)
-        movieNameTv.text = movieName
-        movieDescriptionTv.text = movieDescription
+        binding.movieNameTv.text = movieName
+        binding.movieDescriptionTv.text = movieDescription
     }
 
     private fun preparePlayer() {
@@ -63,6 +62,45 @@ class PlayerActivity : AppCompatActivity() {
         exoPlayer?.playWhenReady = playWhenReady
         exoPlayer?.prepare()
     }
+
+    private var isFullscreen = false
+
+
+    private fun testFullscreen(){
+        binding.playerView.setFullscreenButtonClickListener {
+
+//            //  Handle full screen callback based on dialog visibility
+//            if(!dialog.isShowing){
+//                this.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+//                dialog = object : Dialog(this, android.R.style.Theme_Black_NoTitleBar_Fullscreen){
+//                    override fun onBackPressed() {
+//                        StyledPlayerView.switchTargetView(player, fullScreenPlayerView, playerView)
+//                        this@MainActivity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+//
+//                        // You can change the drawable of the image button.
+//                        playerView.findViewById<ImageButton>(com.google.android.exoplayer2.ui.R.id.exo_fullscreen)
+//                            .setImageResource(R.drawable.ic_fullscreen_expand)
+//
+//                        super.onBackPressed()
+//                    }
+//                }
+//                dialog?.addContentView(
+//                    fullScreenPlayerView,
+//                    ViewGroup.LayoutParams(
+//                        ViewGroup.LayoutParams.MATCH_PARENT,
+//                        ViewGroup.LayoutParams.MATCH_PARENT
+//                    )
+//                )
+//                dialog?.show()
+//                StyledPlayerView.switchTargetView(player, playerView, fullScreenPlayerView)
+//            } else {
+//                StyledPlayerView.switchTargetView(player, fullScreenPlayerView, playerView)
+//                this@MainActivity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+//                dialog?.dismiss()
+//            }
+        }
+    }
+
 
     private fun  releasePlayer(){
         exoPlayer?.let { player ->
