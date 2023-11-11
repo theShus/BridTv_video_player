@@ -22,7 +22,25 @@ class VideoViewModel (private val videoRepository: VideoRepository) : ViewModel(
 
         println("XXX POZVANA VM FUNKCIJA")
 
-//        videoRepository.getMusicVids()
+        videoRepository.testApi()
+
+        val subscription = videoRepository
+            .testApi()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    println("DOSLI SMO DO KRAJA")
+                    println(it)
+
+//                    carState.value = CarState.Success(it)
+                },
+                {
+//                    carState.value = CarState.Error("Error happened while fetching data from the server")
+                    Timber.e(it)
+                }
+            )
+        subscriptions.add(subscription)
 
 
 //        val subscription = videoRepository

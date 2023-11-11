@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(applicationContext,"Button is clicked", Toast.LENGTH_SHORT).show()
 
             println("XXX KLIKNUTO DUGME")
-//            videoViewMode.getMusicVideos()
+            videoViewMode.getMusicVideos()
 
         }
     }

@@ -2,15 +2,19 @@ package com.example.bridtv_video_player.modules
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+//import com.squareup.moshi.Moshi
+//import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
+//import retrofit2.converter.moshi.MoshiConverterFactory
+//import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 import java.util.Date
 import java.util.concurrent.TimeUnit
 
@@ -21,27 +25,33 @@ val core_module = module {
         androidApplication().getSharedPreferences(androidApplication().packageName, Context.MODE_PRIVATE)
     }
 
-    single { createRetrofit(moshi = get(), httpClient = get()) }
+//    single { createRetrofit(moshi = get(), httpClient = get()) }
 
-    single { createMoshi() }
+    single { createRetrofit(gson = get(), httpClient = get()) }
+
+
+//    single { createMoshi() }
+
+    single { createGson() }
+
 
     single { createOkHttpClient() }
 }
 
 const val token = "ba99d5592ac96b3493c4cd6fa145a8e6"
-const val baseUrl = "https://api.vimeo.com/"
+const val baseUrl = "https://api.vimeo.com"
+//const val baseUrl = "https://myfakeapi.com/"
 
-fun createMoshi(): Moshi {
-    return Moshi.Builder()
-        .add(Date::class.java, Rfc3339DateJsonAdapter())
-        .build()
+fun createGson(): Gson {
+    return GsonBuilder()
+        .create()
 }
 
-fun createRetrofit(moshi: Moshi, httpClient: OkHttpClient): Retrofit {
+fun createRetrofit(gson: Gson, httpClient: OkHttpClient): Retrofit {
     return Retrofit.Builder()
         .baseUrl(baseUrl)
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-        .addConverterFactory(MoshiConverterFactory.create(moshi).asLenient())
+        .addConverterFactory(GsonConverterFactory.create(gson))
         .client(httpClient)
         .build()
 }

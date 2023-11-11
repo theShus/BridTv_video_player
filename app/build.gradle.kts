@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id ("kotlin-kapt")
 }
 
 android {
@@ -30,11 +31,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
@@ -97,7 +98,7 @@ dependencies {
     val retrofitVersion = "2.9.0"
     implementation ("com.squareup.retrofit2:retrofit:${retrofitVersion}")
     implementation ("com.squareup.retrofit2:adapter-rxjava2:${retrofitVersion}")
-    implementation ("com.squareup.retrofit2:converter-moshi:${retrofitVersion}")
+//    implementation ("com.squareup.retrofit2:converter-moshi:${retrofitVersion}")
 
     // okHTTP
     val okHttpVersion = "4.9.0"
@@ -105,9 +106,41 @@ dependencies {
     implementation ("com.squareup.okhttp3:logging-interceptor:$okHttpVersion")
     implementation ("com.squareup.okhttp3:okhttp-urlconnection:$okHttpVersion")
 
+    //Gson
+    implementation( "com.squareup.retrofit2:retrofit:2.9.0")
+    implementation( "com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation( "com.google.code.gson:gson:2.8.8")
+
+
     //Moshi
-    implementation ("com.squareup.moshi:moshi-adapters:1.14.0")
-    implementation ("com.squareup.retrofit2:converter-moshi:2.9.0")
+//    val moshiVersion = "1.12.0"
+//    implementation( "com.squareup.moshi:moshi-adapters:$moshiVersion")
+//
+//    implementation ("com.google.code.gson:gson:2.8.9")
+
+//    kapt ("com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion")
+
+//    implementation ("androidx.navigation:navigation-compose:2.4.0-alpha04")
+//    implementation ("com.google.android.material:material:1.1.0")
+//    implementation ("androidx.appcompat:appcompat:1.0.0")
+//
+//    implementation ("com.google.code.gson:gson:2.8.6")
+//    implementation ("com.squareup.picasso:picasso:2.71828")
+//
+//    kapt ("androidx.room:room-compiler:2.4.2")
+
+
+
+
+//    implementation ("com.squareup.moshi:moshi:1.12.0")
+//    implementation ("com.squareup.moshi:moshi-kotlin:1.12.0")
+//    implementation ("com.squareup.moshi:moshi-kotlin-codegen:1.12.0")
+//
+//    implementation ("com.squareup.moshi:moshi-adapters:1.14.0")
+//    implementation ("com.squareup.retrofit2:converter-moshi:2.9.0")
+////    kapt ("com.squareup.moshi:moshi-kotlin-codegen:2.9.0")
+//    kapt("com.squareup.moshi:moshi-kotlin-codegen:1.12.0")
+
 
     //Exo player
     implementation ("com.google.android.exoplayer:exoplayer-core:2.16.0")

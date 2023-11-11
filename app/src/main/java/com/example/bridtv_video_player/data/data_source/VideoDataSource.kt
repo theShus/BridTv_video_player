@@ -1,5 +1,6 @@
 package com.example.bridtv_video_player.data.data_source
 
+import com.example.bridtv_video_player.data.models.server_responses.GetCarsResponse
 import com.example.bridtv_video_player.data.models.server_responses.GetVideosResponse
 import com.example.bridtv_video_player.data.models.server_responses.TestResponse
 import io.reactivex.Observable
@@ -14,5 +15,8 @@ interface VideoDataSource {
 
 //    @GET
 //    fun testApi(): Observable<Any>
+
+    @GET("/videos/?query=music&fields=uri, name, type, link, duration")
+    fun fetchAll():Observable<Any>
 
 }
