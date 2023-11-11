@@ -2,7 +2,7 @@ package com.example.bridtv_video_player.application
 
 import android.app.Application
 import com.example.bridtv_video_player.modules.core_module
-import com.example.bridtv_video_player.modules.video_module
+import com.example.bridtv_video_player.modules.movie_module
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidFileProperties
 import org.koin.android.ext.koin.androidLogger
@@ -32,7 +32,7 @@ class Application : Application(){
     private fun initKoin() {
         val modules = listOf(
             core_module,
-            video_module
+            movie_module
         )
         startKoin {
             androidLogger(Level.ERROR)

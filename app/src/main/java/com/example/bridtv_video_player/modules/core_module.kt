@@ -25,22 +25,18 @@ val core_module = module {
         androidApplication().getSharedPreferences(androidApplication().packageName, Context.MODE_PRIVATE)
     }
 
-//    single { createRetrofit(moshi = get(), httpClient = get()) }
-
     single { createRetrofit(gson = get(), httpClient = get()) }
 
-
-//    single { createMoshi() }
-
     single { createGson() }
-
 
     single { createOkHttpClient() }
 }
 
-const val token = "ba99d5592ac96b3493c4cd6fa145a8e6"
-const val baseUrl = "https://api.vimeo.com"
-//const val baseUrl = "https://myfakeapi.com/"
+//const val token = "ba99d5592ac96b3493c4cd6fa145a8e6"
+//const val baseUrl = "https://api.vimeo.com"
+
+const val token = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3NzhjMDk3YzE5ZGMxOGI5ZDYyYTE1ODA1Yzk0YTA2OCIsInN1YiI6IjY1NGU1ZmRlZmQ0ZjgwMDBlNDgyYzgyMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.LB3YgTCkRQnAPHB1eRj0xFr1MSfny3xYsPkc3CJayww"
+const val baseUrl = "https://api.themoviedb.org"
 
 fun createGson(): Gson {
     return GsonBuilder()
