@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#27272C"
+    xmlns:argType="http://schemas.android.com/tools"
+    tools:context=".view.activities.PlayerActivity">
+
+
+    <com.google.android.exoplayer2.ui.StyledPlayerView
+        android:id="@+id/playerView"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:show_subtitle_button="true"
+        argType:fastforward_increment="15000"
+        argType:resize_mode="fixed_width"
+        argType:rewind_increment="15000"
+        argType:show_buffering="when_playing"
+        argType:show_fastforward_button="true"
+        argType:show_next_button="false"
+        argType:show_previous_button="false"
+        argType:show_rewind_button="true"
+        argType:show_subtitle_button="true"
+        argType:use_artwork="true"
+        argType:use_controller="true"
+        argType:use_sensor_rotation="true" />
+
+    <TextView
+        android:id="@+id/movieNameTv"
+        android:layout_width="350dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="50dp"
+        android:text="TextView"
+        android:textAlignment="viewStart"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/playerView" />
+
+    <TextView
+        android:id="@+id/movieDescriptionTv"
+        android:layout_width="351dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="40dp"
+        android:text="TextView"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/movieNameTv" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,6 +2,7 @@ package com.example.bridtv_video_player.modules
 
 import android.content.Context
 import android.content.SharedPreferences
+import at.huber.youtubeExtractor.BuildConfig
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 //import com.squareup.moshi.Moshi
@@ -66,12 +67,6 @@ fun createOkHttpClient(): OkHttpClient {
         val request = requestBuilder.build()
         chain.proceed(request)
     }
-
-//    if (BuildConfig.DEBUG) { //todo look into this
-//        val logging = HttpLoggingInterceptor()
-//        logging.level = HttpLoggingInterceptor.Level.BODY
-//        httpClient.addInterceptor(logging)
-//    }
 
     return httpClient.build()
 }

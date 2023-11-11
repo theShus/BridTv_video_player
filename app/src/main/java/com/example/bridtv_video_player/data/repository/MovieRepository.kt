@@ -6,7 +6,7 @@ import io.reactivex.Observable
 interface MovieRepository {
 
 
-    fun fetchPopularMovies(): Observable<List<Movie>>
+    fun fetchPopularMovies(pageToLoad: Int): Observable<List<Movie>>
 
 
 }

@@ -15,19 +15,22 @@ class MovieViewModel (private val movieRepository: MovieRepository) : ViewModel(
     private val subscriptions = CompositeDisposable()
     override val networkState: MutableLiveData<NetworkState> = MutableLiveData()
     override val paginationList: MutableLiveData<List<Movie>> = MutableLiveData()
+    override var newMovies: List<Movie> = arrayListOf()
 
-    override var movies: List<Movie> = arrayListOf()
-
+    //helper var
+    private val storageList: ArrayList<Movie> = arrayListOf()
+    private var currentPage: Int = 1
 
     override fun getPopularMovies() {
         val subscription = movieRepository
-            .fetchPopularMovies()
+            .fetchPopularMovies(currentPage)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {
-                    println(it)
+//                    println(it)
                     networkState.value = NetworkState.Success(it)
+                    currentPage += 1 //set up next load
                 },
                 {
                     networkState.value = NetworkState.Error("Error happened while fetching data from the server")
@@ -37,14 +40,9 @@ class MovieViewModel (private val movieRepository: MovieRepository) : ViewModel(
         subscriptions.add(subscription)
     }
 
-
     override fun loadPagination(initial: Boolean) {
-        val holderList: ArrayList<Movie> = arrayListOf()
-
-        for (i in 0 until 10){
-            holderList.add(movies[i])
-        }
-
-        paginationList.value = holderList
+        //its loading perfectly 20 movies every pull, so no need for special pagination
+        storageList.addAll(newMovies)
+        paginationList.value = storageList
     }
 }

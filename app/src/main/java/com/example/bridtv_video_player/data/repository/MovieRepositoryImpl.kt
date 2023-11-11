@@ -6,10 +6,10 @@ import io.reactivex.Observable
 
 class MovieRepositoryImpl(private val remoteDataSource: MovieDataSource) : MovieRepository {
 
-    override fun fetchPopularMovies(): Observable<List<Movie>>{
+    override fun fetchPopularMovies(pageToLoad: Int): Observable<List<Movie>>{
 
         return remoteDataSource
-            .fetchPopularMovies()
+            .fetchPopularMovies("en", pageToLoad)
             .map {
                 it.results.map { movieResponse ->
                     Movie (
