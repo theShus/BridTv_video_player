@@ -5,10 +5,6 @@ import com.example.bridtv_video_player.data.models.Video
 import com.squareup.moshi.JsonClass
 
 //@JsonClass(generateAdapter = true)
-data class GetVideosResponse (
-    var total: Int,
-//    var page: Int,
-//    var per_page: Int,
-//    var paging: Paging,
-//    var data: List<Video>
+data class TestResponse (
+    var endpoints: List<TestModel>
 )

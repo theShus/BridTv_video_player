@@ -22,7 +22,9 @@ class VideoViewModel (private val videoRepository: VideoRepository) : ViewModel(
 
         println("XXX POZVANA VM FUNKCIJA")
 
-        videoRepository.getMusicVids()
+//        videoRepository.getMusicVids()
+
+
 //        val subscription = videoRepository
 //            .getMusicVids()
 //            .subscribeOn(Schedulers.io())

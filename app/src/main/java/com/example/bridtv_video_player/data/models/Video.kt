@@ -2,7 +2,7 @@ package com.example.bridtv_video_player.data.models
 
 import com.squareup.moshi.JsonClass
 
-@JsonClass(generateAdapter = true)
+//@JsonClass(generateAdapter = true)
 data class Video (
     var uri: String,
     var name: String,

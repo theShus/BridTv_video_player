@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import com.example.bridtv_video_player.data.data_source.VideoDataSource
 import com.example.bridtv_video_player.data.models.Video
 import com.example.bridtv_video_player.data.models.server_responses.GetVideosResponse
+import com.example.bridtv_video_player.data.models.server_responses.TestModel
+import com.example.bridtv_video_player.data.models.server_responses.TestResponse
 import io.reactivex.Observable
 
 class VideoRepositoryImpl(private val remoteDataSource: VideoDataSource) : VideoRepository {
@@ -17,10 +19,10 @@ class VideoRepositoryImpl(private val remoteDataSource: VideoDataSource) : Video
         println("XXX POZVANA REPO FUNKCIJA")
 
 
-        remoteDataSource
-            .fetchMusic()
-            .map {
-                println(it)
+//        remoteDataSource
+//            .fetchMusic()
+//            .map {
+//                println(it)
 
 //                it.data.map { videoResponse ->
 //
@@ -32,8 +34,14 @@ class VideoRepositoryImpl(private val remoteDataSource: VideoDataSource) : Video
 //                        duration = videoResponse.duration
 //                    )
 //                }
-            }
+//            }
     }
+
+//    override fun testApi(){
+//        println("xxx PRE KURCA")
+////        println(remoteDataSource.testApi())
+//
+//    }
 
 
 }
