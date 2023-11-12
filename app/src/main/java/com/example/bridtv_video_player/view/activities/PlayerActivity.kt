@@ -1,26 +1,24 @@
 package com.example.bridtv_video_player.view.activities
 
+import android.app.Activity
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.FrameLayout
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import com.example.bridtv_video_player.R
 import com.example.bridtv_video_player.databinding.ActivityPlayerBinding
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.source.dash.DashMediaSource
-import com.google.android.exoplayer2.ui.PlayerView
-import com.google.android.exoplayer2.ui.StyledPlayerView
-import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
 
 class PlayerActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPlayerBinding
-
     private lateinit var movieName: String
     private lateinit var movieDescription: String
     private lateinit var movieUrl: String
+    private lateinit var fullScreenButton : FrameLayout
 
     private var exoPlayer: ExoPlayer? = null
     private var playbackPosition = 0L
@@ -49,37 +47,43 @@ class PlayerActivity : AppCompatActivity() {
     private fun initView(){
         binding.movieNameTv.text = movieName
         binding.movieDescriptionTv.text = movieDescription
+        fullScreenButton = findViewById(R.id.exo_fullscreen_button)
     }
 
     private fun initListeners(){
+
+        fullScreenButton.setOnClickListener {
+            val intent = Intent(this, FullscreenActivity::class.java)
+            intent.putExtra("movieUrl", movieUrl)
+            intent.putExtra("playbackPosition", exoPlayer!!.currentPosition)
+            releasePlayer()
+            startActivityForResult.launch(intent)
+        }
+
         binding.backButton.setOnClickListener {
             this.finish()
+        }
+    }
+
+    private val startActivityForResult: ActivityResultLauncher<Intent> = registerForActivityResult( ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == Activity.RESULT_OK) {
+            val data = it.data!!
+            playbackPosition  = data.getLongExtra("playbackPosition",0L)
+            preparePlayer()
         }
     }
 
     private fun preparePlayer() {
         exoPlayer = ExoPlayer.Builder(this).build()
         exoPlayer?.playWhenReady = true
+        exoPlayer!!.seekTo(playbackPosition)//set time in video
         binding.playerView.player = exoPlayer
         val mediaItem = MediaItem.fromUri(movieUrl)
-//        val defaultHttpDataSourceFactory = DefaultHttpDataSource.Factory()
-//        val mediaSource = DashMediaSource.Factory(defaultHttpDataSourceFactory).createMediaSource(mediaItem)
-//        exoPlayer?.setMediaSource(mediaSource)
-
         exoPlayer?.setMediaItem(mediaItem)
-
         exoPlayer?.seekTo(playbackPosition)
         exoPlayer?.playWhenReady = playWhenReady
         exoPlayer?.prepare()
     }
-
-    private var isFullscreen = false
-
-
-    private fun testFullscreen(){
-
-    }
-
 
     private fun  releasePlayer(){
         exoPlayer?.let { player ->

@@ -17,6 +17,10 @@
         android:theme="@style/Theme.AppCompat.Light"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".view.activities.FullscreenActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:exported="false" />
+        <activity
             android:name=".view.activities.PlayerActivity"
             android:exported="false" />
         <activity
