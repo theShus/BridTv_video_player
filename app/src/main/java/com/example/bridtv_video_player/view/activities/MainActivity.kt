@@ -16,7 +16,6 @@ import com.example.bridtv_video_player.view.recycler.MovieAdapter
 import com.example.bridtv_video_player.view_model.MovieContract
 import com.example.bridtv_video_player.view_model.MovieViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import timber.log.Timber
 
 
 class MainActivity : AppCompatActivity() {
@@ -24,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     private val movieViewModel: MovieContract.ViewModel by viewModel<MovieViewModel>()
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: MovieAdapter
+    private var intent : Intent? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,6 +50,7 @@ class MainActivity : AppCompatActivity() {
                 super.onScrollStateChanged(recyclerView, newState)
                 if (!recyclerView.canScrollVertically(1)){
                     movieViewModel.getVimeoMovies()
+                    //todo dodaj neki delay
                     Toast.makeText(applicationContext, "Loading more movies", Toast.LENGTH_SHORT).show()
                 }
             }
@@ -57,20 +58,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onItemClick(movie: VimeoMovie){
-        val intent = Intent(this, PlayerActivity::class.java)
-        intent.putExtra("movieName", movie.name)
-        intent.putExtra("movieDescription", movie.description)
-        //todo postavi pravi link
-        intent.putExtra("movieUrl", "")
-        startActivity(intent)
-        finish()
+        intent = Intent(this, PlayerActivity::class.java)
+        intent?.putExtra("movieName", movie.name)
+        intent?.putExtra("movieDescription", movie.description)
+
+        movieViewModel.getVideoUrl(movie.uri.split("/")[2])
     }
 
 
     @SuppressLint("NotifyDataSetChanged")
     private fun initObservers() {
         movieViewModel.networkState.observe(this) { networkState ->
-            Timber.e(networkState.toString())
             renderState(networkState)
         }
 
@@ -79,7 +77,17 @@ class MainActivity : AppCompatActivity() {
             adapter.notifyDataSetChanged()
         }
 
-//        movieViewModel.getPopularMovies()
+        movieViewModel.urlToLoad.observe(this){
+            if (movieViewModel.urlToLoad.value == null){
+                Toast.makeText(applicationContext, "Error while opening video", Toast.LENGTH_SHORT).show()
+            }
+            else{
+                intent?.putExtra("movieUrl", movieViewModel.urlToLoad.value)
+                startActivity(intent)
+                finish()
+            }
+        }
+
         movieViewModel.getVimeoMovies()
     }
 
@@ -87,7 +95,7 @@ class MainActivity : AppCompatActivity() {
         when (state) {
             is NetworkState.Success -> {
                 movieViewModel.newMovies = state.movies
-                movieViewModel.loadPagination(true)
+                movieViewModel.loadPagination()
             }
             is NetworkState.Loading -> {
                 println("Loading")

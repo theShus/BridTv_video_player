@@ -25,6 +25,15 @@ class MovieRepositoryImpl(private val remoteDataSource: MovieDataSource) : Movie
             }
     }
 
+    override fun fetchVimeoVideoUrl(videoId: String): Observable<String> {
+        println("XXX USLI SMO U TRAZENJE URLA")
+        return remoteDataSource
+            .fetchVideoUrl("http://player.vimeo.com/video/$videoId/config")
+            .map {
+                it.request.files.progressive[0].url
+            }
+    }
+
     private fun getNotNullValue(text: String?): String{
         return if(text == null) ""
         else text

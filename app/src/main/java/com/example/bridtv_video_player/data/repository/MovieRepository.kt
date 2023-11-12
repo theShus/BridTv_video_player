@@ -7,4 +7,6 @@ interface MovieRepository {
 
     fun fetchVimeoVideos(pageToLoad: Int): Observable<List<VimeoMovie>>
 
+    fun fetchVimeoVideoUrl(videoId: String): Observable<String>
+
 }

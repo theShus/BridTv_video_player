@@ -11,10 +11,13 @@ interface MovieContract {
         val networkState: LiveData<NetworkState>
         var newMovies: List<VimeoMovie>
         val paginationList: MutableLiveData<List<VimeoMovie>>
+        val urlToLoad: LiveData<String>
 
         fun getVimeoMovies()
 
-        fun loadPagination(initial: Boolean)
+        fun getVideoUrl(videoId: String)
+
+        fun loadPagination()
 
     }
 }

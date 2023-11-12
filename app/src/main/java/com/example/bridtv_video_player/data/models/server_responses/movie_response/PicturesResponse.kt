@@ -1,4 +1,4 @@
-package com.example.bridtv_video_player.data.models.server_responses
+package com.example.bridtv_video_player.data.models.server_responses.movie_response
 
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable

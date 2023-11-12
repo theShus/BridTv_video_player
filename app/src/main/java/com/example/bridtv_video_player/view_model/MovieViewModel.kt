@@ -1,5 +1,6 @@
 package com.example.bridtv_video_player.view_model
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 //import com.example.bridtv_video_player.data.models.Movie
@@ -17,22 +18,19 @@ class MovieViewModel (private val movieRepository: MovieRepository) : ViewModel(
     override val networkState: MutableLiveData<NetworkState> = MutableLiveData()
     override val paginationList: MutableLiveData<List<VimeoMovie>> = MutableLiveData()
     override var newMovies: List<VimeoMovie> = arrayListOf()
+    override var urlToLoad: MutableLiveData<String> = MutableLiveData()
 
-    //helper var
+    //helper vars
     private val storageList: ArrayList<VimeoMovie> = arrayListOf()
     private var currentPage: Int = 1
 
     override fun getVimeoMovies() {
-        println("XXX POZIVAMO VIMEO KURAC")
-
         val subscription = movieRepository
             .fetchVimeoVideos(currentPage)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {
-                    println("XXX VIMEOOO")
-                    println(it)
                     networkState.value = NetworkState.Success(it)
                     currentPage += 1 //set up next load
                 },
@@ -44,7 +42,25 @@ class MovieViewModel (private val movieRepository: MovieRepository) : ViewModel(
         subscriptions.add(subscription)
     }
 
-    override fun loadPagination(initial: Boolean) {
+    override fun getVideoUrl(videoId: String) {
+
+        //todo stavi network loading
+
+        val subscription = movieRepository
+            .fetchVimeoVideoUrl(videoId)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    urlToLoad.value = it
+                },
+                {
+                    Timber.e(it)
+                }
+            )
+        subscriptions.add(subscription)    }
+
+    override fun loadPagination() {
         //its loading perfectly 20 movies every pull, so no need for special pagination
         storageList.addAll(newMovies)
         paginationList.value = storageList
