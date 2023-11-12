@@ -10,6 +10,10 @@ import com.example.bridtv_video_player.states.NetworkState
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class MovieViewModel (private val movieRepository: MovieRepository) : ViewModel(), MovieContract.ViewModel{
@@ -19,12 +23,16 @@ class MovieViewModel (private val movieRepository: MovieRepository) : ViewModel(
     override val paginationList: MutableLiveData<List<VimeoMovie>> = MutableLiveData()
     override var newMovies: List<VimeoMovie> = arrayListOf()
     override var urlToLoad: MutableLiveData<String> = MutableLiveData()
+    override val storageList: ArrayList<VimeoMovie> = arrayListOf()
+    override var recyclerIsRefreshing: MutableLiveData<Boolean> = MutableLiveData(false)
 
     //helper vars
-    private val storageList: ArrayList<VimeoMovie> = arrayListOf()
     private var currentPage: Int = 1
 
+
     override fun getVimeoMovies() {
+        networkState.value = NetworkState.Loading
+
         val subscription = movieRepository
             .fetchVimeoVideos(currentPage)
             .subscribeOn(Schedulers.io())
@@ -33,6 +41,8 @@ class MovieViewModel (private val movieRepository: MovieRepository) : ViewModel(
                 {
                     networkState.value = NetworkState.Success(it)
                     currentPage += 1 //set up next load
+                    recyclerIsRefreshing.value = false
+                    println("CURRENT LIST SIZE = " + storageList.size)
                 },
                 {
                     networkState.value = NetworkState.Error("Error happened while fetching data from the server")
@@ -43,9 +53,6 @@ class MovieViewModel (private val movieRepository: MovieRepository) : ViewModel(
     }
 
     override fun getVideoUrl(videoId: String) {
-
-        //todo stavi network loading
-
         val subscription = movieRepository
             .fetchVimeoVideoUrl(videoId)
             .subscribeOn(Schedulers.io())
@@ -58,7 +65,13 @@ class MovieViewModel (private val movieRepository: MovieRepository) : ViewModel(
                     Timber.e(it)
                 }
             )
-        subscriptions.add(subscription)    }
+        subscriptions.add(subscription)
+    }
+
+    override fun startRvRefresh() {
+        recyclerIsRefreshing.value = true
+        getVimeoMovies()
+    }
 
     override fun loadPagination() {
         //its loading perfectly 20 movies every pull, so no need for special pagination

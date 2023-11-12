@@ -6,7 +6,7 @@ import io.reactivex.Observable
 
 class MovieRepositoryImpl(private val remoteDataSource: MovieDataSource) : MovieRepository {
 
-    val preSetQuery = "movie"
+    val preSetQuery = "music"
     val preSetFields : List<String> = listOf("","uri","name","description","pictures","")//empty strings cuz im too lazy to build a proper to string :)
     val preSetPerPage = 20
 
@@ -26,18 +26,14 @@ class MovieRepositoryImpl(private val remoteDataSource: MovieDataSource) : Movie
     }
 
     override fun fetchVimeoVideoUrl(videoId: String): Observable<String> {
-        println("XXX USLI SMO U TRAZENJE URLA")
         return remoteDataSource
             .fetchVideoUrl("http://player.vimeo.com/video/$videoId/config")
-            .map {
-                it.request.files.progressive[0].url
-            }
+            .map { it.request.files.progressive[0].url }
     }
 
     private fun getNotNullValue(text: String?): String{
         return if(text == null) ""
         else text
     }
-
 
 }

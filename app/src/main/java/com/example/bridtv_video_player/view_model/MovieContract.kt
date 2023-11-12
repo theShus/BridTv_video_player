@@ -12,10 +12,14 @@ interface MovieContract {
         var newMovies: List<VimeoMovie>
         val paginationList: MutableLiveData<List<VimeoMovie>>
         val urlToLoad: LiveData<String>
+        val storageList: ArrayList<VimeoMovie>
+        val recyclerIsRefreshing: LiveData<Boolean>
 
         fun getVimeoMovies()
 
         fun getVideoUrl(videoId: String)
+
+        fun startRvRefresh()
 
         fun loadPagination()
 

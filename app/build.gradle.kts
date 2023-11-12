@@ -39,6 +39,7 @@ android {
     buildFeatures {
         compose = true
         viewBinding = true
+        dataBinding = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.3"
@@ -84,6 +85,10 @@ dependencies {
     // Rx
     implementation ("io.reactivex.rxjava2:rxjava:2.2.9")
     implementation ("io.reactivex.rxjava2:rxandroid:2.1.0")
+
+    //Swipe refresh layout
+    implementation ("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+
 
     //Compose
 //    androidTestImplementation ("androidx.compose.ui:ui-test-junit4:1.5.4")

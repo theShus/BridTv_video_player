@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -44,17 +45,6 @@ class MainActivity : AppCompatActivity() {
         adapter = MovieAdapter(::onItemClick)//callback za on click
         binding.movieRV.addItemDecoration(GridItemDecoration(20)) // Adjust the spacing as needed
         binding.movieRV.adapter = adapter
-
-        binding.movieRV.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-                if (!recyclerView.canScrollVertically(1)){
-                    movieViewModel.getVimeoMovies()
-                    //todo dodaj neki delay
-                    Toast.makeText(applicationContext, "Loading more movies", Toast.LENGTH_SHORT).show()
-                }
-            }
-        })
     }
 
     private fun onItemClick(movie: VimeoMovie){
@@ -68,6 +58,25 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun initObservers() {
+
+        movieViewModel.recyclerIsRefreshing.observe(this){
+            binding.swipeContainer.isRefreshing = it
+        }
+
+        binding.movieRV.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (!recyclerView.canScrollVertically(1)) {
+                    val itemCount = recyclerView.adapter?.itemCount//we move the recycler a bit up so it doesn't trigger again by accident
+                    Handler().postDelayed(Runnable {
+                        binding.movieRV.layoutManager?.scrollToPosition(itemCount!!/2 - 1)
+                        movieViewModel.startRvRefresh()
+                    }, 1000)
+
+                }
+            }
+        })
+
         movieViewModel.networkState.observe(this) { networkState ->
             renderState(networkState)
         }
