@@ -13,6 +13,8 @@ interface MovieContract {
 
         fun getPopularMovies()
 
+        fun getVimeoMovies()
+
         fun loadPagination(initial: Boolean)
 
     }

@@ -40,6 +40,30 @@ class MovieViewModel (private val movieRepository: MovieRepository) : ViewModel(
         subscriptions.add(subscription)
     }
 
+    override fun getVimeoMovies() {
+        println("XXX POZIVAMO VIMEO KURAC")
+
+//        movieRepository.fetchVimeoVideos(1)
+
+        val subscription = movieRepository
+            .fetchVimeoVideos(currentPage)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    println("XXX VIMEOOO")
+                    println(it)
+//                    networkState.value = NetworkState.Success(it)
+                    currentPage += 1 //set up next load
+                },
+                {
+                    networkState.value = NetworkState.Error("Error happened while fetching data from the server")
+                    Timber.e(it)
+                }
+            )
+        subscriptions.add(subscription)
+    }
+
     override fun loadPagination(initial: Boolean) {
         //its loading perfectly 20 movies every pull, so no need for special pagination
         storageList.addAll(newMovies)

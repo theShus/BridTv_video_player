@@ -57,7 +57,10 @@ class PlayerActivity : AppCompatActivity() {
         val defaultHttpDataSourceFactory = DefaultHttpDataSource.Factory()
         val mediaItem = MediaItem.fromUri(movieUrl)
         val mediaSource = DashMediaSource.Factory(defaultHttpDataSourceFactory).createMediaSource(mediaItem)
-        exoPlayer?.setMediaSource(mediaSource)
+//        exoPlayer?.setMediaSource(mediaSource)
+
+        exoPlayer?.setMediaItem(mediaItem)
+
         exoPlayer?.seekTo(playbackPosition)
         exoPlayer?.playWhenReady = playWhenReady
         exoPlayer?.prepare()
@@ -67,38 +70,7 @@ class PlayerActivity : AppCompatActivity() {
 
 
     private fun testFullscreen(){
-        binding.playerView.setFullscreenButtonClickListener {
 
-//            //  Handle full screen callback based on dialog visibility
-//            if(!dialog.isShowing){
-//                this.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-//                dialog = object : Dialog(this, android.R.style.Theme_Black_NoTitleBar_Fullscreen){
-//                    override fun onBackPressed() {
-//                        StyledPlayerView.switchTargetView(player, fullScreenPlayerView, playerView)
-//                        this@MainActivity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-//
-//                        // You can change the drawable of the image button.
-//                        playerView.findViewById<ImageButton>(com.google.android.exoplayer2.ui.R.id.exo_fullscreen)
-//                            .setImageResource(R.drawable.ic_fullscreen_expand)
-//
-//                        super.onBackPressed()
-//                    }
-//                }
-//                dialog?.addContentView(
-//                    fullScreenPlayerView,
-//                    ViewGroup.LayoutParams(
-//                        ViewGroup.LayoutParams.MATCH_PARENT,
-//                        ViewGroup.LayoutParams.MATCH_PARENT
-//                    )
-//                )
-//                dialog?.show()
-//                StyledPlayerView.switchTargetView(player, playerView, fullScreenPlayerView)
-//            } else {
-//                StyledPlayerView.switchTargetView(player, fullScreenPlayerView, playerView)
-//                this@MainActivity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-//                dialog?.dismiss()
-//            }
-        }
     }
 
 

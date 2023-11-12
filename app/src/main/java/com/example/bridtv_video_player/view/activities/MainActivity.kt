@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun init() {
-        initRecycler()
+//        initRecycler()
         initObservers()
     }
 
@@ -49,18 +49,20 @@ class MainActivity : AppCompatActivity() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 if (!recyclerView.canScrollVertically(1)){
-                    movieViewModel.getPopularMovies()
+//                    movieViewModel.getPopularMovies()
                     Toast.makeText(applicationContext, "Loading more movies", Toast.LENGTH_SHORT).show()
                 }
             }
-        })    }
+        })
+    }
 
     private fun onItemClick(movie: Movie){
         val intent = Intent(this, PlayerActivity::class.java)
         intent.putExtra("movieName", movie.original_title)
         intent.putExtra("movieDescription", movie.overview)
         //todo postavi pravi link
-        intent.putExtra("movieUrl", "https://bitmovin-a.akamaihd.net/content/MI201109210084_1/mpds/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.mpd")
+        intent.putExtra(
+            "movieUrl", "https://vod-progressive.akamaized.net/exp=1699785275~acl=%2Fvimeo-transcode-storage-prod-us-east1-h264-540p%2F01%2F4190%2F18%2F470951878%2F2096012386.mp4~hmac=f82f946dbbdd293263b2ee5be11393b7d004279e5d548b75a3883186b8dd6513/vimeo-transcode-storage-prod-us-east1-h264-540p/01/4190/18/470951878/2096012386.mp4")
         startActivity(intent)
         finish()
     }
@@ -78,7 +80,8 @@ class MainActivity : AppCompatActivity() {
             adapter.notifyDataSetChanged()
         }
 
-        movieViewModel.getPopularMovies()
+//        movieViewModel.getPopularMovies()
+        movieViewModel.getVimeoMovies()
     }
 
     private fun renderState(state: NetworkState) {

@@ -12,24 +12,12 @@
     <com.google.android.exoplayer2.ui.StyledPlayerView
         android:id="@+id/playerView"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_marginTop="20dp"
+        android:layout_height="300dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:show_subtitle_button="true"
-        argType:fastforward_increment="15000"
-        argType:resize_mode="fixed_width"
-        argType:rewind_increment="15000"
-        argType:show_buffering="when_playing"
-        argType:show_fastforward_button="true"
-        argType:show_next_button="false"
-        argType:show_previous_button="false"
-        argType:show_rewind_button="true"
-        argType:show_subtitle_button="true"
-        argType:use_artwork="true"
-        argType:use_controller="true"
-        argType:use_sensor_rotation="true" />
+        app:layout_constraintTop_toTopOf="parent">
+    </com.google.android.exoplayer2.ui.StyledPlayerView>
+
 
     <TextView
         android:id="@+id/movieNameTv"
