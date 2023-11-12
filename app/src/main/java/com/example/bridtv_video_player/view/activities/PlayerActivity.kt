@@ -36,6 +36,7 @@ class PlayerActivity : AppCompatActivity() {
     private fun init() {
         getExtra()
         initView()
+        initListeners()
         preparePlayer()
     }
 
@@ -50,13 +51,19 @@ class PlayerActivity : AppCompatActivity() {
         binding.movieDescriptionTv.text = movieDescription
     }
 
+    private fun initListeners(){
+        binding.backButton.setOnClickListener {
+            this.finish()
+        }
+    }
+
     private fun preparePlayer() {
         exoPlayer = ExoPlayer.Builder(this).build()
         exoPlayer?.playWhenReady = true
         binding.playerView.player = exoPlayer
-        val defaultHttpDataSourceFactory = DefaultHttpDataSource.Factory()
         val mediaItem = MediaItem.fromUri(movieUrl)
-        val mediaSource = DashMediaSource.Factory(defaultHttpDataSourceFactory).createMediaSource(mediaItem)
+//        val defaultHttpDataSourceFactory = DefaultHttpDataSource.Factory()
+//        val mediaSource = DashMediaSource.Factory(defaultHttpDataSourceFactory).createMediaSource(mediaItem)
 //        exoPlayer?.setMediaSource(mediaSource)
 
         exoPlayer?.setMediaItem(mediaItem)

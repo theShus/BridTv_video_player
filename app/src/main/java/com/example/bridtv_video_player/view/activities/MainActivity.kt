@@ -93,7 +93,6 @@ class MainActivity : AppCompatActivity() {
             else{
                 intent?.putExtra("movieUrl", movieViewModel.urlToLoad.value)
                 startActivity(intent)
-                finish()
             }
         }
 
