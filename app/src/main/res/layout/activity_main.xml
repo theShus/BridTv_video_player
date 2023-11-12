@@ -9,7 +9,6 @@
     android:background="#27272C"
     android:orientation="vertical">
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/movieRV"
         android:layout_width="409dp"

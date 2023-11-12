@@ -31,8 +31,6 @@ class MovieViewModel (private val movieRepository: MovieRepository) : ViewModel(
 
 
     override fun getVimeoMovies() {
-        networkState.value = NetworkState.Loading
-
         val subscription = movieRepository
             .fetchVimeoVideos(currentPage)
             .subscribeOn(Schedulers.io())

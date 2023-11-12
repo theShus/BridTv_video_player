@@ -105,9 +105,6 @@ class MainActivity : AppCompatActivity() {
                 movieViewModel.newMovies = state.movies
                 movieViewModel.loadPagination()
             }
-            is NetworkState.Loading -> {
-                println("Loading")
-            }
             is NetworkState.Error -> {
                 Toast.makeText(this, state.message, Toast.LENGTH_SHORT).show()
             }
