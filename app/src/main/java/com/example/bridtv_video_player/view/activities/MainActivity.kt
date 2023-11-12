@@ -35,6 +35,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun init() {
+        binding.swipeContainer.isEnabled = false
+
         initRecycler()
         initObservers()
     }
