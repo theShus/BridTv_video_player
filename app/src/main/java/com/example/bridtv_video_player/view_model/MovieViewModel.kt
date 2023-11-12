@@ -2,7 +2,8 @@ package com.example.bridtv_video_player.view_model
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.bridtv_video_player.data.models.Movie
+//import com.example.bridtv_video_player.data.models.Movie
+import com.example.bridtv_video_player.data.models.VimeoMovie
 import com.example.bridtv_video_player.data.repository.MovieRepository
 import com.example.bridtv_video_player.states.NetworkState
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -14,36 +15,15 @@ class MovieViewModel (private val movieRepository: MovieRepository) : ViewModel(
 
     private val subscriptions = CompositeDisposable()
     override val networkState: MutableLiveData<NetworkState> = MutableLiveData()
-    override val paginationList: MutableLiveData<List<Movie>> = MutableLiveData()
-    override var newMovies: List<Movie> = arrayListOf()
+    override val paginationList: MutableLiveData<List<VimeoMovie>> = MutableLiveData()
+    override var newMovies: List<VimeoMovie> = arrayListOf()
 
     //helper var
-    private val storageList: ArrayList<Movie> = arrayListOf()
+    private val storageList: ArrayList<VimeoMovie> = arrayListOf()
     private var currentPage: Int = 1
-
-    override fun getPopularMovies() {
-        val subscription = movieRepository
-            .fetchPopularMovies(currentPage)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {
-//                    println(it)
-                    networkState.value = NetworkState.Success(it)
-                    currentPage += 1 //set up next load
-                },
-                {
-                    networkState.value = NetworkState.Error("Error happened while fetching data from the server")
-                    Timber.e(it)
-                }
-            )
-        subscriptions.add(subscription)
-    }
 
     override fun getVimeoMovies() {
         println("XXX POZIVAMO VIMEO KURAC")
-
-//        movieRepository.fetchVimeoVideos(1)
 
         val subscription = movieRepository
             .fetchVimeoVideos(currentPage)
@@ -53,7 +33,7 @@ class MovieViewModel (private val movieRepository: MovieRepository) : ViewModel(
                 {
                     println("XXX VIMEOOO")
                     println(it)
-//                    networkState.value = NetworkState.Success(it)
+                    networkState.value = NetworkState.Success(it)
                     currentPage += 1 //set up next load
                 },
                 {
