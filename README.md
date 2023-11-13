@@ -20,4 +20,7 @@ The app provides the following functionalities:
 
 To swap between the two versions of the app, press the floating action button.
 
+
+
+
 ![image](https://github.com/theShus/BridTv_video_player/assets/72025798/739b475d-20bc-431c-94ec-a1d77b0f634b)
