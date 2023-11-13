@@ -36,9 +36,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun init() {
         binding.swipeContainer.isEnabled = false
-
         initRecycler()
         initObservers()
+        movieViewModel.getVimeoMovies()
     }
 
 
@@ -60,7 +60,6 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun initObservers() {
-
         movieViewModel.recyclerIsRefreshing.observe(this){
             binding.swipeContainer.isRefreshing = it
         }
@@ -98,7 +97,10 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        movieViewModel.getVimeoMovies()
+        binding.swapVersions.setOnClickListener {
+            val intent = Intent(this, RecyclerComposeActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun renderState(state: NetworkState) {

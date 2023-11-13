@@ -22,9 +22,13 @@ class MovieViewModel (private val movieRepository: MovieRepository) : ViewModel(
     override val networkState: MutableLiveData<NetworkState> = MutableLiveData()
     override val paginationList: MutableLiveData<List<VimeoMovie>> = MutableLiveData()
     override var newMovies: List<VimeoMovie> = arrayListOf()
-    override var urlToLoad: MutableLiveData<String> = MutableLiveData()
     override val storageList: ArrayList<VimeoMovie> = arrayListOf()
     override var recyclerIsRefreshing: MutableLiveData<Boolean> = MutableLiveData(false)
+
+    //for opening a player activity (added for compose)
+    override var urlToLoad: MutableLiveData<String> = MutableLiveData()
+    override var movieName: String = ""
+    override var movieDescription: String = ""
 
     //helper vars
     private var currentPage: Int = 1
