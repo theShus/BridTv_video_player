@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -36,7 +35,6 @@ import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
-import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
 import com.google.android.exoplayer2.ui.StyledPlayerView
 import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.upstream.DefaultDataSource
@@ -97,14 +95,16 @@ class PlayerComposeActivity : ComponentActivity() {
                         )
                     }
                     Box(
-                        modifier = Modifier.fillMaxSize().padding(20.dp),
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(20.dp),
                         contentAlignment = Alignment.BottomStart
-                    ){
+                    ) {
                         FloatingActionButton(//THIS IS NOT HOW THIS BUTTON IS SUPPOSED TO BE USED, BUT ITS CONVENIENT RN
                             onClick = { closeActivity() },
                             containerColor = Color.LightGray
                         ) {
-                            Image (
+                            Image(
                                 painter = painterResource(id = R.drawable.baseline_arrow_back_24),
                                 contentDescription = "fab",
                                 contentScale = ContentScale.FillBounds
@@ -116,7 +116,9 @@ class PlayerComposeActivity : ComponentActivity() {
         }
     }
 
-    private fun closeActivity() { this.finish() }
+    private fun closeActivity() {
+        this.finish()
+    }
 }
 
 @Composable

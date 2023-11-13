@@ -1,22 +1,18 @@
 package com.example.bridtv_video_player.view_model
 
-import androidx.lifecycle.LiveData
+//import com.example.bridtv_video_player.data.models.Movie
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-//import com.example.bridtv_video_player.data.models.Movie
 import com.example.bridtv_video_player.data.models.VimeoMovie
 import com.example.bridtv_video_player.data.repository.MovieRepository
 import com.example.bridtv_video_player.states.NetworkState
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class MovieViewModel (private val movieRepository: MovieRepository) : ViewModel(), MovieContract.ViewModel{
+class MovieViewModel(private val movieRepository: MovieRepository) : ViewModel(),
+    MovieContract.ViewModel {
 
     private val subscriptions = CompositeDisposable()
     override val networkState: MutableLiveData<NetworkState> = MutableLiveData()
@@ -47,7 +43,8 @@ class MovieViewModel (private val movieRepository: MovieRepository) : ViewModel(
                     println("CURRENT LIST SIZE = " + storageList.size)
                 },
                 {
-                    networkState.value = NetworkState.Error("Error happened while fetching data from the server")
+                    networkState.value =
+                        NetworkState.Error("Error happened while fetching data from the server")
                     Timber.e(it)
                 }
             )

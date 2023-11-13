@@ -7,7 +7,14 @@ import io.reactivex.Observable
 class MovieRepositoryImpl(private val remoteDataSource: MovieDataSource) : MovieRepository {
 
     val preSetQuery = "music"
-    val preSetFields : List<String> = listOf("","uri","name","description","pictures","")//empty strings cuz im too lazy to build a proper to string :)
+    val preSetFields: List<String> = listOf(
+        "",
+        "uri",
+        "name",
+        "description",
+        "pictures",
+        ""
+    )//empty strings cuz im too lazy to build a proper to string :)
     val preSetPerPage = 20
 
     override fun fetchVimeoVideos(pageToLoad: Int): Observable<List<VimeoMovie>> {
@@ -31,8 +38,8 @@ class MovieRepositoryImpl(private val remoteDataSource: MovieDataSource) : Movie
             .map { it.request.files.progressive[0].url }
     }
 
-    private fun getNotNullValue(text: String?): String{
-        return if(text == null) ""
+    private fun getNotNullValue(text: String?): String {
+        return if (text == null) ""
         else text
     }
 

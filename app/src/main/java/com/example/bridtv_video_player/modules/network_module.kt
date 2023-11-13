@@ -9,7 +9,7 @@ import org.koin.dsl.module
 
 val movie_module = module {
 
-    viewModel { MovieViewModel (movieRepository = get()) }
+    viewModel { MovieViewModel(movieRepository = get()) }
 
     single<MovieRepository> { MovieRepositoryImpl(remoteDataSource = get()) }
 

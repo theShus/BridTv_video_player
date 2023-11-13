@@ -3,7 +3,7 @@ package com.example.bridtv_video_player.data.models.server_responses.url_respons
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-data class ProgressiveResponse (
+data class ProgressiveResponse(
     @SerializedName("profile") val profile: Any,
     @SerializedName("width") val width: Any,
     @SerializedName("height") val height: Any,
@@ -14,4 +14,4 @@ data class ProgressiveResponse (
     @SerializedName("quality") val quality: Any,
     @SerializedName("id") val id: Any,
     @SerializedName("origin") val origin: Any,
-): Serializable
+) : Serializable

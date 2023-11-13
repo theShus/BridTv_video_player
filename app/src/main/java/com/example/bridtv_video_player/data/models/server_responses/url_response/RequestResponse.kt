@@ -3,7 +3,7 @@ package com.example.bridtv_video_player.data.models.server_responses.url_respons
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-data class RequestResponse (
+data class RequestResponse(
     @SerializedName("files") val files: FilesResponse,
     @SerializedName("file_codecs") val file_codecs: Any,
     @SerializedName("lang") val lang: Any,
@@ -23,4 +23,4 @@ data class RequestResponse (
     @SerializedName("country") val country: Any,
     @SerializedName("client") val client: Any,
     @SerializedName("ab_tests") val ab_tests: Any,
-): Serializable
+) : Serializable

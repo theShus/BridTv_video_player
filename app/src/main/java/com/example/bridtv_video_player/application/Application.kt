@@ -12,14 +12,14 @@ import org.koin.core.logger.Level
 import timber.log.Timber
 
 
-class Application : Application(){
+class Application : Application() {
 
     override fun onCreate() {
         super.onCreate()
         init()
     }
 
-    private fun init(){
+    private fun init() {
         initTimber()
         initKoin()
     }

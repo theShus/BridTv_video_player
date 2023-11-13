@@ -8,28 +8,22 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -47,9 +41,6 @@ import com.example.bridtv_video_player.data.models.VimeoMovie
 import com.example.bridtv_video_player.states.NetworkState
 import com.example.bridtv_video_player.view_model.MovieContract
 import com.example.bridtv_video_player.view_model.MovieViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -84,12 +75,12 @@ class RecyclerComposeActivity : ComponentActivity() {
                             .fillMaxSize()
                             .padding(20.dp),
                         contentAlignment = Alignment.BottomEnd
-                    ){
+                    ) {
                         FloatingActionButton(//THIS IS NOT HOW THIS BUTTON IS SUPPOSED TO BE USED, BUT ITS CONVENIENT RN
                             onClick = { closeActivity() },
                             containerColor = Color.Green
                         ) {
-                            Image (
+                            Image(
                                 painter = painterResource(id = R.drawable.baseline_sync_24),
                                 contentDescription = "fab",
                                 contentScale = ContentScale.FillBounds
@@ -100,14 +91,17 @@ class RecyclerComposeActivity : ComponentActivity() {
             }
         }
     }
-    private fun closeActivity(){ this.finish() }
 
-    private fun setUrlObserver(){
-        movieViewModel.urlToLoad.observe(this){
-            if (movieViewModel.urlToLoad.value == null){
-                Toast.makeText(applicationContext, "Error while opening video", Toast.LENGTH_SHORT).show()
-            }
-            else{
+    private fun closeActivity() {
+        this.finish()
+    }
+
+    private fun setUrlObserver() {
+        movieViewModel.urlToLoad.observe(this) {
+            if (movieViewModel.urlToLoad.value == null) {
+                Toast.makeText(applicationContext, "Error while opening video", Toast.LENGTH_SHORT)
+                    .show()
+            } else {
                 val intent = Intent(this, PlayerComposeActivity::class.java)
                 intent.putExtra("movieName", movieViewModel.movieName)
                 intent.putExtra("movieDescription", movieViewModel.movieDescription)
@@ -117,7 +111,6 @@ class RecyclerComposeActivity : ComponentActivity() {
         }
     }
 }
-
 
 
 @SuppressLint("CoroutineCreationDuringComposition")
@@ -138,7 +131,7 @@ fun MovieList(movieViewModel: MovieContract.ViewModel, lifecycleOwner: Lifecycle
         modifier = Modifier.padding(16.dp, 70.dp, 16.dp, 16.dp)
     ) {
         itemsIndexed(movieList) { index, movie ->
-            if(index == movieList.size-1){
+            if (index == movieList.size - 1) {
                 Toast.makeText(context, "Loading more movies", Toast.LENGTH_SHORT).show()
                 movieViewModel.getVimeoMovies()
             }
@@ -185,7 +178,12 @@ fun MovieListItem(movie: VimeoMovie, movieViewModel: MovieContract.ViewModel) {
 }
 
 
-private fun renderState(movieViewModel: MovieContract.ViewModel, state: NetworkState, context: Context, movieList: MutableList<VimeoMovie>) {
+private fun renderState(
+    movieViewModel: MovieContract.ViewModel,
+    state: NetworkState,
+    context: Context,
+    movieList: MutableList<VimeoMovie>
+) {
     when (state) {
         is NetworkState.Success -> {
             movieViewModel.newMovies = state.movies
@@ -194,6 +192,7 @@ private fun renderState(movieViewModel: MovieContract.ViewModel, state: NetworkS
             movieList.clear()
             movieList.addAll(movieViewModel.storageList)
         }
+
         is NetworkState.Error -> {
             Toast.makeText(context, state.message, Toast.LENGTH_SHORT).show()
         }

@@ -1,11 +1,8 @@
 package com.example.bridtv_video_player.view.activities
 
-import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
-import android.util.DisplayMetrics
-import android.view.WindowManager
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.example.bridtv_video_player.R
@@ -37,9 +34,9 @@ class FullscreenActivity : AppCompatActivity() {
         preparePlayer()
     }
 
-    private lateinit var fullScreenButton : FrameLayout
+    private lateinit var fullScreenButton: FrameLayout
 
-    private fun initListeners(){
+    private fun initListeners() {
         fullScreenButton = findViewById(R.id.exo_fullscreen_button)
 
         fullScreenButton.setOnClickListener {
@@ -51,12 +48,12 @@ class FullscreenActivity : AppCompatActivity() {
         }
     }
 
-    private fun getExtra(){
+    private fun getExtra() {
         movieUrl = intent.getStringExtra("movieUrl").toString()
         playbackPosition = intent.getLongExtra("playbackPosition", 0L)
     }
 
-    private fun  initView(){
+    private fun initView() {
         supportActionBar?.hide()
         this.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
 
@@ -77,7 +74,7 @@ class FullscreenActivity : AppCompatActivity() {
         exoPlayer?.prepare()
     }
 
-    private fun  releasePlayer(){
+    private fun releasePlayer() {
         exoPlayer?.let { player ->
             playbackPosition = player.currentPosition
             playWhenReady = player.playWhenReady

@@ -6,7 +6,10 @@ import com.example.bridtv_video_player.databinding.MovieItemBinding
 import com.squareup.picasso.Picasso
 
 
-class MovieViewHolder  (private val itemBinding: MovieItemBinding, val onClick: (position: Int) -> Unit): RecyclerView.ViewHolder(itemBinding.root){
+class MovieViewHolder(
+    private val itemBinding: MovieItemBinding,
+    val onClick: (position: Int) -> Unit
+) : RecyclerView.ViewHolder(itemBinding.root) {
 
     init {
         itemBinding.root.setOnClickListener {
@@ -14,7 +17,7 @@ class MovieViewHolder  (private val itemBinding: MovieItemBinding, val onClick: 
         }
     }
 
-    fun bind(movie: VimeoMovie){
+    fun bind(movie: VimeoMovie) {
         itemBinding.movieName.text = movie.name
         Picasso.get().load(movie.base_link).into(itemBinding.videoTumbnail)
     }

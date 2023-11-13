@@ -7,7 +7,7 @@ import com.example.bridtv_video_player.data.models.VimeoMovie
 import com.example.bridtv_video_player.states.NetworkState
 
 interface MovieContract {
-    interface ViewModel{
+    interface ViewModel {
         val networkState: LiveData<NetworkState>
         var newMovies: List<VimeoMovie>
         val paginationList: MutableLiveData<List<VimeoMovie>>

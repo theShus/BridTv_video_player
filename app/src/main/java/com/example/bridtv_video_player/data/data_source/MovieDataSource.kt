@@ -15,10 +15,10 @@ interface MovieDataSource {
         @Query("fields") fields: List<String>,
         @Query("page") page: Int,
         @Query("per_page") per_page: Int,
-        ): Observable<VimeoMoviesResponse>
+    ): Observable<VimeoMoviesResponse>
 
     @GET
-    fun fetchVideoUrl(@Url url: String) : Observable<VimeoVideoConfigResponse>
+    fun fetchVideoUrl(@Url url: String): Observable<VimeoVideoConfigResponse>
 
 
 }

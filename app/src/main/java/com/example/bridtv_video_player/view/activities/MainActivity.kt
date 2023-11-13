@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
     private val movieViewModel: MovieContract.ViewModel by viewModel<MovieViewModel>()
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: MovieAdapter
-    private var intent : Intent? = null
+    private var intent: Intent? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
         binding.movieRV.adapter = adapter
     }
 
-    private fun onItemClick(movie: VimeoMovie){
+    private fun onItemClick(movie: VimeoMovie) {
         intent = Intent(this, PlayerActivity::class.java)
         intent?.putExtra("movieName", movie.name)
         intent?.putExtra("movieDescription", movie.description)
@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun initObservers() {
-        movieViewModel.recyclerIsRefreshing.observe(this){
+        movieViewModel.recyclerIsRefreshing.observe(this) {
             binding.swipeContainer.isRefreshing = it
         }
 
@@ -68,9 +68,10 @@ class MainActivity : AppCompatActivity() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 if (!recyclerView.canScrollVertically(1)) {
-                    val itemCount = recyclerView.adapter?.itemCount//we move the recycler a bit up so it doesn't trigger again by accident
+                    val itemCount =
+                        recyclerView.adapter?.itemCount//we move the recycler a bit up so it doesn't trigger again by accident
                     Handler().postDelayed(Runnable {
-                        binding.movieRV.layoutManager?.scrollToPosition(itemCount!!/2 - 1)
+                        binding.movieRV.layoutManager?.scrollToPosition(itemCount!! / 2 - 1)
                         movieViewModel.startRvRefresh()
                     }, 1000)
 
@@ -87,11 +88,11 @@ class MainActivity : AppCompatActivity() {
             adapter.notifyDataSetChanged()
         }
 
-        movieViewModel.urlToLoad.observe(this){
-            if (movieViewModel.urlToLoad.value == null){
-                Toast.makeText(applicationContext, "Error while opening video", Toast.LENGTH_SHORT).show()
-            }
-            else{
+        movieViewModel.urlToLoad.observe(this) {
+            if (movieViewModel.urlToLoad.value == null) {
+                Toast.makeText(applicationContext, "Error while opening video", Toast.LENGTH_SHORT)
+                    .show()
+            } else {
                 intent?.putExtra("movieUrl", movieViewModel.urlToLoad.value)
                 startActivity(intent)
             }
@@ -109,6 +110,7 @@ class MainActivity : AppCompatActivity() {
                 movieViewModel.newMovies = state.movies
                 movieViewModel.loadPagination()
             }
+
             is NetworkState.Error -> {
                 Toast.makeText(this, state.message, Toast.LENGTH_SHORT).show()
             }

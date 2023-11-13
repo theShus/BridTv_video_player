@@ -3,7 +3,7 @@ package com.example.bridtv_video_player.data.models.server_responses.url_respons
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-data class VimeoVideoConfigResponse (
+data class VimeoVideoConfigResponse(
     @SerializedName("cdn_url") val cdn_url: String,
     @SerializedName("vimeo_api_url") val vimeo_api_url: String,
     @SerializedName("request") val request: RequestResponse,
@@ -15,4 +15,4 @@ data class VimeoVideoConfigResponse (
     @SerializedName("embed") val embed: Any,
     @SerializedName("seo") val seo: Any,
 
-    ): Serializable
+    ) : Serializable

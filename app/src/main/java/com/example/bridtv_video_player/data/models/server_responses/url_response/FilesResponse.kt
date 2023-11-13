@@ -3,8 +3,8 @@ package com.example.bridtv_video_player.data.models.server_responses.url_respons
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-data class FilesResponse (
+data class FilesResponse(
     @SerializedName("dash") val dash: Any,
     @SerializedName("hls") val hls: Any,
     @SerializedName("progressive") val progressive: List<ProgressiveResponse>,
-): Serializable
+) : Serializable
